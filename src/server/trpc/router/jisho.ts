@@ -18,7 +18,11 @@ export const jishoRouter = router({
     .query(async ({ input }) => {
       const processFile = async () => {
         const records = [];
-        const parser = fs.createReadStream(`./public/freq.csv`).pipe(parse());
+        const path =
+          process.env.NODE_ENV === "production"
+            ? `https://${process.env.VERCEL_URL}/freq.csv`
+            : "./public/freq.csv";
+        const parser = fs.createReadStream(path).pipe(parse());
         let i = 1;
         for await (const record of parser) {
           if (record[0] === input.word) {
