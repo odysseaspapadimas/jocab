@@ -20,8 +20,10 @@ export const jishoRouter = router({
         const records = [];
         const path =
           process.env.NODE_ENV === "production"
-            ? `https://${process.env.VERCEL_URL}/freq.csv`
+            ? "/freq.csv"
             : "./public/freq.csv";
+
+            console.log(path, )
         const parser = fs.createReadStream(path).pipe(parse());
         let i = 1;
         for await (const record of parser) {
